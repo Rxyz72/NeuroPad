@@ -13,7 +13,6 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
   FlutterLocalNotificationsPlugin();
 
-  /// Initialize notifications and timezone
   Future<void> initNotification() async {
     // Initialize timezone database
     tz.initializeTimeZones();
@@ -37,19 +36,9 @@ class NotificationService {
       iOS: iosInitSettings,
     );
 
-    // Initialize plugin
-    await notificationsPlugin.initialize(
-      initializationSettings: initSettings,
-    );
 
-    // Request permission for Android 13+
-    await notificationsPlugin
-        .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestPermission();
   }
 
-  /// Notification details (used for both show and schedule)
   NotificationDetails _notificationDetails() {
     return const NotificationDetails(
       android: AndroidNotificationDetails(
@@ -64,7 +53,6 @@ class NotificationService {
     );
   }
 
-  /// Show a notification immediately
   Future<void> showNotification({
     required int id,
     String? title,
